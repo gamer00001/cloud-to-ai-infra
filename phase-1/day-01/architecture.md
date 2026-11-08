@@ -1,0 +1,1 @@
+I build an application which is mostly used by pakistani people so our major users resides in pakistan. So avoid latency for major users i will choose `ap-south-1` region.

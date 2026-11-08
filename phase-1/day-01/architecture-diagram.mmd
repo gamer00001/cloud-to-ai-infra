@@ -1,0 +1,22 @@
+flowchart TB
+  U[Internet users] --> IGW[Internet Gateway]
+  IGW --> ALB[ALB across public-a/b]
+  subgraph AZa[AZ a]
+    NATa[NAT-a]
+    APPa[App servers app-a]
+    DBa[(PostgreSQL primary db-a)]
+    RDa[(Redis node db-a)]
+  end
+  subgraph AZb[AZ b]
+    NATb[NAT-b]
+    APPb[App servers app-b]
+    DBb[(PostgreSQL standby db-b)]
+    RDb[(Redis replica db-b)]
+  end
+  ALB --> APPa & APPb
+  APPa --> DBa & RDa
+  APPb --> DBa & RDa
+  DBa -.replication.-> DBb
+  RDa -.replication.-> RDb
+  APPa --> NATa --> IGW
+  APPb --> NATb --> IGW
